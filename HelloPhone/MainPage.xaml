@@ -1,0 +1,156 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions" 
+    x:Class="HelloPhone.MainPage"
+    mc:Ignorable="d" SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded" d:DesignHeight="768" d:DesignWidth="480">
+	<phone:PhoneApplicationPage.Resources>
+		<ControlTemplate x:Key="ButtonControlTemplate1" TargetType="Button">
+			<Border BorderThickness="2" CornerRadius="15" BorderBrush="Silver">
+				<Border.Background>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Color="#FFB6B5B5" Offset="1"/>
+					</LinearGradientBrush>
+				</Border.Background>
+				<TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,4"/>
+			</Border>
+		</ControlTemplate>
+		<Storyboard x:Name="AnimatedBanner"/>
+		<Storyboard x:Name="Animatedbanner">
+			<DoubleAnimation Duration="0:0:1" To="-1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="BannerTextBlock" d:IsOptimized="True">
+				<DoubleAnimation.EasingFunction>
+					<CubicEase EasingMode="EaseOut"/>
+				</DoubleAnimation.EasingFunction>
+			</DoubleAnimation>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="BannerTextBlock">
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<CubicEase EasingMode="EaseOut"/>
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+				<EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="1">
+					<EasingDoubleKeyFrame.EasingFunction>
+						<CubicEase EasingMode="EaseInOut"/>
+					</EasingDoubleKeyFrame.EasingFunction>
+				</EasingDoubleKeyFrame>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+    
+        
+	</phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.Triggers>
+        <EventTrigger>
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ContentPanel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" Duration="0:0:2" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </phone:PhoneApplicationPage.Triggers> 
+    
+    
+    
+    <!--Sample code showing usage of ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+	<phone:PhoneApplicationPage.FontFamily>
+		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+	</phone:PhoneApplicationPage.FontFamily>
+	<phone:PhoneApplicationPage.FontSize>
+		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
+	</phone:PhoneApplicationPage.FontSize>
+	<phone:PhoneApplicationPage.Foreground>
+		<StaticResource ResourceKey="PhoneForegroundBrush"/>
+	</phone:PhoneApplicationPage.Foreground>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="VisualStateGroup" ec:ExtendedVisualStateManager.UseFluidLayout="True">
+    			<VisualState x:Name="VisualState"/>
+    			<VisualState x:Name="VisualState1"/>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+
+        	<RowDefinition Height="Auto"/>
+        	<RowDefinition Height="Auto"/>
+        	<RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+    
+    	<VisualStateManager.CustomVisualStateManager>
+    		<ec:ExtendedVisualStateManager/>
+    	</VisualStateManager.CustomVisualStateManager>
+    
+    <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="MY WINDOWS PHONE APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="Puzzle App" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="MessageTextBox" FontSize="{StaticResource PhoneFontSizeLarge}" Margin="12,22,198,33" Height="80" CaretBrush="Black" BorderBrush="#BFFFFFFF" BorderThickness="2" Background="Gray" OpacityMask="Black" />
+            <Button x:Name="ClickMeButton" Content="Goto Map" HorizontalAlignment="Right" Padding="4" Margin="0,37,21,48" Click="ClickMeButton_Click" Width="151" Height="50" Template="{StaticResource ButtonControlTemplate1}" />
+            <TextBlock x:Name="BannerTextBlock" Text="Your text will display here" Foreground="#FFFF9A00" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left" Margin="33,108,0,-12" Visibility="Visible" RenderTransformOrigin="0.5,0.5" >
+            	<TextBlock.RenderTransform>
+            		<CompositeTransform/>
+            	</TextBlock.RenderTransform>
+            </TextBlock>
+        </Grid>
+        <Grid Grid.Row="2" Margin="9,0,-9,329">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="114*" />
+                <ColumnDefinition Width="197*" />
+                <ColumnDefinition Width="169*" />
+            </Grid.ColumnDefinitions>
+            <TextBox Height="72" HorizontalAlignment="Left" Margin="15,18,0,0" x:Name="textBox1" Text="" VerticalAlignment="Top" Width="246" Grid.ColumnSpan="2" />
+            <Button Content="Goto Puzzle" Height="72" HorizontalAlignment="Left" Margin="153,18,0,0" x:Name="button1" VerticalAlignment="Top" Width="192" Click="button1_Click" Grid.ColumnSpan="2" Grid.Column="1" />
+            <TextBlock Height="30" HorizontalAlignment="Left" Margin="36,96,0,0" x:Name="textBlock1" Text="Your text will display here" Foreground="Goldenrod" VerticalAlignment="Top" Visibility="Visible" Grid.ColumnSpan="2" />
+        </Grid>
+        <TextBox Grid.Row="2" Height="Auto" HorizontalAlignment="Stretch" Margin="21,171,193,0" Name="textBox2" Text="http://www.google.com" VerticalAlignment="Top" />
+        <Button Content="Go" Height="Auto" HorizontalAlignment="Stretch" Margin="284,171,12,0" Name="Go" VerticalAlignment="Top" Width="Auto" Grid.Row="2" Click="Go_Click" />      
+        
+        <Image Source="gmail.jpg" 
+               RenderTransformOrigin="0.5, 0.5" 
+               CacheMode="BitmapCache" 
+               Margin="30,252,214,100" 
+               Grid.Row="2" 
+               ImageFailed="Image_ImageFailed">
+            <Image.RenderTransform>
+                <CompositeTransform x:Name="transform" />
+            </Image.RenderTransform>
+            <!--<toolkit:GestureService.GestureListener>
+                <toolkit:GestureListener PinchStarted="OnPinchStarted" PinchDelta="OnPinchDelta" />
+            </toolkit:GestureService.GestureListener> -->
+        </Image>
+        
+        
+<Button Content="Design page" Grid.Row="2" Height="72" HorizontalAlignment="Left" Margin="276,280,0,0" Name="button2" VerticalAlignment="Top" Width="194" Click="button2_Click" />
+        <Button Content="Snow page" Grid.Row="2" Height="72" HorizontalAlignment="Left" Margin="276,358,0,0" Name="button3" VerticalAlignment="Top" Width="192" Click="button3_Click" />
+    </Grid>
+
+</phone:PhoneApplicationPage>
